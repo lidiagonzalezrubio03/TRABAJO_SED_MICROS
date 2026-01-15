@@ -1,0 +1,12 @@
+../Core/Src/main.c:54:6:HAL_GPIO_EXTI_Callback	16	static
+../Core/Src/main.c:61:5:obtener_indice_boton	16	static
+../Core/Src/main.c:72:6:iniciar_semilla_aleatoria	16	static
+../Core/Src/main.c:80:6:reproducir_secuencia	24	static
+../Core/Src/main.c:90:6:efecto_derrota	8	static
+../Core/Src/main.c:96:6:efecto_victoria	16	static
+../Core/Src/main.c:110:5:main	32	static
+../Core/Src/main.c:203:6:SystemClock_Config	88	static
+../Core/Src/main.c:222:13:MX_ADC1_Init	24	static
+../Core/Src/main.c:243:13:MX_TIM2_Init	32	static
+../Core/Src/main.c:260:13:MX_GPIO_Init	40	static
+../Core/Src/main.c:290:6:Error_Handler	4	static,ignoring_inline_asm
