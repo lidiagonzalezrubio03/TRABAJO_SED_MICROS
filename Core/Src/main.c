@@ -28,6 +28,7 @@ uint16_t leds_juego[5] = {GPIO_PIN_0, GPIO_PIN_1, GPIO_PIN_2, GPIO_PIN_3, GPIO_P
 uint16_t botones[5] = {GPIO_PIN_0, GPIO_PIN_1, GPIO_PIN_10, GPIO_PIN_11, GPIO_PIN_12};
 
 volatile int boton_pulsado_flag = -1;
+volatile uint32_t ultimo_tiempo_pulsacion = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -49,7 +50,12 @@ int obtener_indice_boton(uint16_t GPIO_Pin);
 //Interrupciones (cuando se pulsa botón)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-    boton_pulsado_flag = obtener_indice_boton(GPIO_Pin);
+	uint32_t tiempo_actual = HAL_GetTick();
+	if (tiempo_actual - ultimo_tiempo_pulsacion >250){
+		boton_pulsado_flag = obtener_indice_boton(GPIO_Pin);
+		ultimo_tiempo_pulsacion = tiempo_actual;
+	}
+
 }
 
 //convierte pin en indice
@@ -139,11 +145,15 @@ int main(void)
       }
 
       reproducir_secuencia(num_pasos, velocidad);
+      boton_pulsado_flag = -1;
+      HAL_Delay(50)
 
+      //pasos jugador
       int error = 0;
       for(int i = 0; i < num_pasos; i++) {
           boton_pulsado_flag = -1;
 
+          // REVISAR ESTO
           __HAL_TIM_SET_COUNTER(&htim2, 0); // Reiniciar cronometro
 
           // Esperar pulsar boton o 30 segundos
