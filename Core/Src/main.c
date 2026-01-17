@@ -148,7 +148,7 @@ int main(void)
 
           // Esperar pulsar boton o 30 segundos
           while(boton_pulsado_flag == -1) {
-              if (__HAL_TIM_GET_COUNTER(&htim2) > 5000) {
+              if (__HAL_TIM_GET_COUNTER(&htim2) > 30000) {
                   error = 1;
                   break;
               }
@@ -163,7 +163,7 @@ int main(void)
               HAL_Delay(200);
               HAL_GPIO_WritePin(GPIOA, leds_juego[boton_pulsado_flag], GPIO_PIN_RESET);
           } else {
-              error = 1;
+              error = 1; //mal
               break;
           }
       }
