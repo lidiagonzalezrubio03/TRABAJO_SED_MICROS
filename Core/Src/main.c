@@ -51,7 +51,7 @@ int obtener_indice_boton(uint16_t GPIO_Pin);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	uint32_t tiempo_actual = HAL_GetTick();
-	if (tiempo_actual - ultimo_tiempo_pulsacion >300){
+	if (tiempo_actual - ultimo_tiempo_pulsacion >50){
 		boton_pulsado_flag = obtener_indice_boton(GPIO_Pin);
 		ultimo_tiempo_pulsacion = tiempo_actual;
 	}
@@ -136,7 +136,7 @@ int main(void)
       int num_pasos = pasos_por_nivel[nivel_actual];
 
       // Velocidad aumenta con el nivel
-      int velocidad = 600 - (nivel_actual * 100);
+      int velocidad = 1000 - (nivel_actual * 150);
       if (velocidad < 400) velocidad = 400;
 
       // secuencia nueva
@@ -235,7 +235,7 @@ static void MX_ADC1_Init(void) {
   hadc1.Init.DMAContinuousRequests = DISABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   HAL_ADC_Init(&hadc1);
-  sConfig.Channel = ADC_CHANNEL_7; // Ajusta según tu pin ADC
+  sConfig.Channel = ADC_CHANNEL_7;
   sConfig.Rank = 1;
   sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
   HAL_ADC_ConfigChannel(&hadc1, &sConfig);
@@ -275,7 +275,7 @@ static void MX_GPIO_Init(void) {
 
   // Entradas
   GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING; // Interrupción en flanco subida
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
