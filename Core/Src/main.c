@@ -146,7 +146,7 @@ int main(void)
 
       reproducir_secuencia(num_pasos, velocidad);
       boton_pulsado_flag = -1;
-      HAL_Delay(50)
+      HAL_Delay(50);
 
       //pasos jugador
       int error = 0;
