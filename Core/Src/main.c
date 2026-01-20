@@ -51,7 +51,7 @@ int obtener_indice_boton(uint16_t GPIO_Pin);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	uint32_t tiempo_actual = HAL_GetTick();
-	if (tiempo_actual - ultimo_tiempo_pulsacion >250){
+	if (tiempo_actual - ultimo_tiempo_pulsacion >300){
 		boton_pulsado_flag = obtener_indice_boton(GPIO_Pin);
 		ultimo_tiempo_pulsacion = tiempo_actual;
 	}
@@ -84,7 +84,7 @@ void reproducir_secuencia(int pasos, int velocidad) {
         HAL_GPIO_WritePin(GPIOA, leds_juego[secuencia[i]], GPIO_PIN_SET);
         HAL_Delay(velocidad);
         HAL_GPIO_WritePin(GPIOA, leds_juego[secuencia[i]], GPIO_PIN_RESET);
-        HAL_Delay(200);
+        HAL_Delay(400);
     }
 }
 
@@ -137,7 +137,7 @@ int main(void)
 
       // Velocidad aumenta con el nivel
       int velocidad = 600 - (nivel_actual * 100);
-      if (velocidad < 200) velocidad = 200;
+      if (velocidad < 400) velocidad = 400;
 
       // secuencia nueva
       for(int i=0; i<num_pasos; i++){
@@ -170,7 +170,7 @@ int main(void)
           if(boton_pulsado_flag == secuencia[i]) {
               // enciende el led pulsado
               HAL_GPIO_WritePin(GPIOA, leds_juego[boton_pulsado_flag], GPIO_PIN_SET);
-              HAL_Delay(200);
+              HAL_Delay(300);
               HAL_GPIO_WritePin(GPIOA, leds_juego[boton_pulsado_flag], GPIO_PIN_RESET);
           } else {
               error = 1; //mal
